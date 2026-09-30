@@ -47,7 +47,7 @@ int main()
 	double period = (double)(time2 - time1) / CLOCKS_PER_SEC;
 
 
-	printf("ÓÃÊ±%fÃë\n", period);
+	printf("ç”¨æ—¶%fç§’\n", period);
 
     return 0;
 		

@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+
 #define ROWS 11
 #define COLS 15
 
@@ -21,11 +23,30 @@ void draw(void);
 
 int main() {
     int xPosition=1, yPosition=1;
-    char command;
+    int command;
     draw();
     while (1) {
-        if (scanf(" %c", &command) != 1) {
-            break;
+        command = _getch();
+        
+        if (command == 0 || command == 224) {
+            int arrow = _getch();
+
+            switch (arrow) {
+                case 72:
+                    command = 'w';  // 上
+                    break;
+                case 80:
+                    command = 's';  // 下
+                    break;
+                case 75:
+                    command = 'a';  // 左
+                    break;
+                case 77:
+                    command = 'd';  // 右
+                    break;
+                default:
+                    continue;
+            }
         }
         if (command == 'q') {
             break;

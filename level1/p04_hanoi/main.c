@@ -19,10 +19,14 @@ int main(void)
     int n;
 
     printf("请输入盘子数量：");
-    scanf("%d", &n);
 
-    if  (n!= 1 || n <= 0) {
-        printf("请输入正整数\n");
+    if (scanf("%d", &n) != 1) {
+        printf("输入失败，请输入整数\n");
+        return 0;
+    }
+
+    if (n <= 0) {
+        printf("盘子数量必须大于0\n");
         return 0;
     }
 

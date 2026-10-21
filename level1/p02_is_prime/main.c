@@ -4,11 +4,15 @@
 int main()
 {
     int n;
-    int state=1;
-    scanf("%d",&n);
+    int state = 1;
 
-    if (n<=1){
-        printf("%d不是素数\n",n);
+    if (scanf("%d", &n) != 1) {
+        printf("输入失败，请输入整数\n");
+        return 0;
+    }
+
+    if (n <= 1) {
+        printf("%d不是素数\n", n);
         return 0;
     }
 

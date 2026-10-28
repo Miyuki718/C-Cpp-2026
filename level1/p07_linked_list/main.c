@@ -16,7 +16,10 @@ void insertAtTail(int v) {
     }
     node->value = v;
     node->next = NULL;
-    tail->next = node;
+    if (head == NULL) {
+    } else {
+        tail->next = node;
+    }
     tail = node;
 }
 
@@ -57,14 +60,9 @@ int findFive(Node *head, int start) {
     return -1;
 }
 
-int main() {
+int main(void) {
     int values[] = {2, 5, 3, 5, 7, 5};
     int count = sizeof(values)/sizeof(values[0]);
-    Node *node=malloc(sizeof (Node));
-    node->value = values[0];
-    node->next = NULL;
-    head = node;
-    tail = node;
     for (int i = 0; i < count; i++) {
         insertAtTail(values[i]);
     }

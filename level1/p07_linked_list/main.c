@@ -17,6 +17,7 @@ void insertAtTail(int v) {
     node->value = v;
     node->next = NULL;
     if (head == NULL) {
+        head = node; // 首次插入：新节点也是首节点。
     } else {
         tail->next = node;
     }

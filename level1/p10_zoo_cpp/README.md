@@ -12,3 +12,15 @@
 1. 增加鸟类，并实现鸟类的鸣叫
 1. 增加一个新品种狗，比如狼狗（狼狗与其他狗叫声不同，更像狼嚎）
 
+
+
+## 实现与运行
+
+使用 C++17，运行 CMake 目标 `p10_zoo_cpp`。
+
+- `Animals.hpp`：Animal 定义纯虚函数 `speak` 和虚析构函数；Dog、Cat、Bird、WolfDog 各自重写叫声。WolfDog 继承 Dog。
+- `Zoo.hpp`：用 `vector<unique_ptr<Animal>>` 保存数量可增长的动物集合，`allSpeak` 按加入顺序调用虚函数。
+- `main.cpp`：加入四种动物并依次叫一次。
+- 扩展时只需新增 Animal 派生类并在 main 中加入对象，无需修改 Zoo。对象自动释放。
+
+验证覆盖空动物园、叫声顺序和在不修改 Zoo 的情况下加入新种类。

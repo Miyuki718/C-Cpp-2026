@@ -84,7 +84,7 @@ Move bestMove(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player aiPlayer) {
 
             board[i][j] = aiPlayer;
             Player opponent = (aiPlayer == BLACK) ? WHITE : BLACK;
-            int score = minimax(board, depth - 1, opponent, aiPlayer, -100000000, 1000000000);
+            int score = minimax(board, depth - 1, opponent, aiPlayer, bestScore, 1000000000);
             board[i][j] = EMPTY;
 
             if (bestMove.row == -1 || score > bestScore) {

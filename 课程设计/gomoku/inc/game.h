@@ -9,7 +9,6 @@ typedef struct {
     GameStatus status;
     GameMode mode;
     AIDifficulty difficulty;
-    Move history[MAX_MOVES];
     int moveCount;
 
 } Game;
@@ -19,8 +18,6 @@ void initGame(Game *game, GameMode mode, AIDifficulty difficulty);
 int gamePlayMove(Game *game, Move move);
 
 void switchPlayer(Game *game);
-
-int gameUndo(Game *game);
 
 int isGameOver(const Game *game);
 

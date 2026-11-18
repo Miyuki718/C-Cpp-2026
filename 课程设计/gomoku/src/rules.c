@@ -5,7 +5,7 @@
 #include "rules.h"
 #include "board.h"
 
-static int countStone(int board[BOARD_SIZE][BOARD_SIZE], int row, int col, Player player, int direction) {
+int countStone(const int board[BOARD_SIZE][BOARD_SIZE], int row, int col, Player player, int direction) {
     int count = 0;
     int forward = 0;
     int backward = 0;
@@ -16,14 +16,14 @@ static int countStone(int board[BOARD_SIZE][BOARD_SIZE], int row, int col, Playe
                                  * 6 7 8*/
     int dc[4] = {-1,0,1,-1};
 
-    while (isInsideBoard(row+dr[direction], col+dc[direction]) && board[row+dr[direction]][col+dc[direction]] == player) {
+    while (isInsideBoard(row+dr[direction], col+dc[direction]) && (board[row+dr[direction]][col+dc[direction]] == player)) {
         backward++;
         row += dr[direction];
         col += dc[direction];
     }
     row = x;
     col = y;
-    while (isInsideBoard(row-dr[direction], col-dc[direction]) && board[row-dr[direction]][col-dc[direction]] == player) {
+    while (isInsideBoard(row-dr[direction], col-dc[direction]) && (board[row-dr[direction]][col-dc[direction]] == player)) {
         forward++;
         row -= dr[direction];
         col -= dc[direction];
@@ -34,6 +34,9 @@ static int countStone(int board[BOARD_SIZE][BOARD_SIZE], int row, int col, Playe
 }
 
 int checkWin(int board[BOARD_SIZE][BOARD_SIZE], int row, int col, Player player) {
+    if (player != BLACK && player != WHITE) {
+        return 0;
+    }
     if (!isInsideBoard(row, col) || board[row][col] != player) {
         return 0;
     } else {

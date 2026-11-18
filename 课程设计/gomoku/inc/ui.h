@@ -1,8 +1,16 @@
-//
-// Created by songy on 2026/11/11.
-//
 
-#ifndef CCPP2026_UI_H
-#define CCPP2026_UI_H
+#ifndef GOMOKU_UI_H
+#define GOMOKU_UI_H
 
-#endif //CCPP2026_UI_H
+#include "game.h"
+
+void uiInit(void);
+
+void uiClose(void);
+
+int uiWindowShouldClose(void);
+
+void uiDrawGame(const Game *game);
+int uiGetClickedMove(Move *move);
+
+#endif

@@ -11,6 +11,4 @@ int isInsideBoard(int row, int col);
 
 int placeStone(int board[BOARD_SIZE][BOARD_SIZE],int row,int col,Player player);
 
-void undoMove(int board[BOARD_SIZE][BOARD_SIZE],int row,int col);
-
 #endif

@@ -32,7 +32,7 @@ int isInsideBoard(int row, int col) {
     }
 }
 
-int PlayStone(int board[BOARD_SIZE][BOARD_SIZE],int row,int col,Player player) {
+int placeStone(int board[BOARD_SIZE][BOARD_SIZE],int row,int col,Player player) {
     if (!isInsideBoard(row, col)||board[row][col] != 0){
         return 0;
     }
@@ -41,10 +41,3 @@ int PlayStone(int board[BOARD_SIZE][BOARD_SIZE],int row,int col,Player player) {
     return 1;
 }
 
-void undoMove(int board[BOARD_SIZE][BOARD_SIZE],int row,int col) {
-    if (!isInsideBoard(row, col)) {
-        return;
-    }
-
-    board[row][col] = 0;
-}

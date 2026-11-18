@@ -1,8 +1,10 @@
-//
-// Created by songy on 2026/11/11.
-//
+#ifndef GOMOKU_EVALUATE_H
+#define GOMOKU_EVALUATE_H
 
-#ifndef CCPP2026_EVALUATE_H
-#define CCPP2026_EVALUATE_H
+#include "common.h"
 
-#endif //CCPP2026_EVALUATE_H
+#define EVAL_WIN_SCORE 1000000
+
+int evaluateBoard(const int board[BOARD_SIZE][BOARD_SIZE], Player player);
+
+#endif

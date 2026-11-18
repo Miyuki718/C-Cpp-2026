@@ -6,7 +6,7 @@
 #include "evaluate.h"
 #include "rules.h"
 
-static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentPlayer, Player aiPlayer) {
+static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentPlayer, Player aiPlayer, int alpha, int beta) {
     int hasEmpty = 0;
     for (int i=0; i<BOARD_SIZE; i++) {
         for (int j=0; j<BOARD_SIZE; j++) {
@@ -44,17 +44,27 @@ static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentP
             if (board[i][j] == EMPTY) {
                 board[i][j] = currentPlayer;
                 Player nextPlayer = (currentPlayer == BLACK)?WHITE:BLACK;
-                int score = minimax(board, depth-1, nextPlayer, aiPlayer);
+                int score = minimax(board, depth-1, nextPlayer, aiPlayer, alpha, beta);
                 board[i][j] = EMPTY;
 
                 if (currentPlayer == aiPlayer) {
                     if (score > bestScore) {
                         bestScore = score;
                     }
+                    if (alpha<bestScore) {
+                        alpha = bestScore;
+                    }
                 } else {
                     if (score < bestScore) {
                         bestScore = score;
                     }
+                    if (beta > bestScore) {
+                        beta = bestScore;
+                    }
+                }
+
+                if (alpha >= beta) {
+                    return bestScore;
                 }
             }
         }
@@ -74,7 +84,7 @@ Move bestMove(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player aiPlayer) {
 
             board[i][j] = aiPlayer;
             Player opponent = (aiPlayer == BLACK) ? WHITE : BLACK;
-            int score = minimax(board, depth - 1, opponent, aiPlayer);
+            int score = minimax(board, depth - 1, opponent, aiPlayer, -100000000, 1000000000);
             board[i][j] = EMPTY;
 
             if (bestMove.row == -1 || score > bestScore) {

@@ -11,7 +11,7 @@ int main(void)
 
     while (!uiWindowShouldClose()) {
         if (game.mode == MODE_PVE && game.status == GAME_PLAYING && game.currentPlayer == WHITE){
-            Move move = bestMove(game.board, 2, WHITE);
+            Move move = bestMove(game.board, 3, WHITE);
             gamePlayMove(&game, move);
         } else {
             Move move;

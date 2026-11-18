@@ -14,10 +14,10 @@ static int scoreRun(int length, int openEnds) {
 
     switch (length) {
         case 4:
-            return openEnds == 2 ? 100000 : 10000;
+            return openEnds == 2 ? 1000000 : 100000;
 
         case 3:
-            return openEnds == 2 ? 1000 : 100;
+            return openEnds == 2 ? 10000 : 100;
 
         case 2:
             return openEnds == 2 ? 100 : 10;

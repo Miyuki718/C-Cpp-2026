@@ -2,7 +2,7 @@
 #ifndef GOMOKU_COMMON_H
 #define GOMOKU_COMMON_H
 
-#define BOARD_SIZE 15
+#define BOARD_SIZE 20
 #define MAX_MOVES (BOARD_SIZE * BOARD_SIZE)
 
 // 棋子类型

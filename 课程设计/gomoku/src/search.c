@@ -5,6 +5,39 @@
 #include "search.h"
 #include "evaluate.h"
 #include "rules.h"
+#include "board.h"
+static int candidates(int board[BOARD_SIZE][BOARD_SIZE], int row, int col) {
+    int isCandidate = 0;
+    int direction[12][2] = {{-1,-1},{-1,0},{-1,1},{0,-1},{0,1},{1,-1},{1,0},{1,1},{-2,0},{2,0},{0,-2},{0,2}};
+    for (int x=0; x<12; x++) {
+        if (isInsideBoard(row+direction[x][0], col+direction[x][1]) && board[row+direction[x][0]][col+direction[x][1]] != EMPTY) {
+            isCandidate = 1;
+        }
+    }
+    return isCandidate;
+}
+
+static int nextMoveWin(int board[BOARD_SIZE][BOARD_SIZE], Player player) {
+    int won = 1;
+    for (int i=0; i<BOARD_SIZE; i++) {
+        for (int j=0; j<BOARD_SIZE; j++) {
+            if (board[i][j] != EMPTY) {
+                continue;
+            }
+            board[i][j] = player;
+            if (checkWin(board, i, j, player)) {
+                board[i][j] = EMPTY;
+                return 1;
+            } else {
+                board[i][j] = EMPTY;
+                won = 0;
+            }
+        }
+    }
+    if (!won) {
+        return 0;
+    }
+}
 
 static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentPlayer, Player aiPlayer, int alpha, int beta) {
     int hasEmpty = 0;
@@ -29,7 +62,16 @@ static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentP
     }
 
     if (depth <=0) {
-        return evaluateBoard(board, aiPlayer);
+        if (nextMoveWin(board, currentPlayer)) {
+            if (currentPlayer == aiPlayer) {
+                return 10000000;
+            } else {
+                return -10000000;
+            }
+        } else {
+            return evaluateBoard(board, aiPlayer);
+        }
+
     }
 
     int bestScore;
@@ -41,6 +83,9 @@ static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentP
 
     for (int i=0; i<BOARD_SIZE; i++) {
         for (int j=0; j<BOARD_SIZE; j++) {
+            if (!candidates(board, i, j)) {
+                continue;
+            }
             if (board[i][j] == EMPTY) {
                 board[i][j] = currentPlayer;
                 Player nextPlayer = (currentPlayer == BLACK)?WHITE:BLACK;
@@ -79,6 +124,9 @@ Move bestMove(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player aiPlayer) {
     for (int i=0; i<BOARD_SIZE; i++) {
         for (int j=0; j<BOARD_SIZE; j++) {
             if (board[i][j] != EMPTY) {
+                continue;
+            }
+            if(!candidates(board, i, j)) {
                 continue;
             }
 

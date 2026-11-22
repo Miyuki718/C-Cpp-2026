@@ -39,7 +39,7 @@ static int nextMoveWin(int board[BOARD_SIZE][BOARD_SIZE], Player player) {
     }
 }
 
-static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentPlayer, Player aiPlayer, int alpha, int beta) {
+static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentPlayer, Player aiPlayer, int alpha, int beta, int ply) {
     int hasEmpty = 0;
     for (int i=0; i<BOARD_SIZE; i++) {
         for (int j=0; j<BOARD_SIZE; j++) {
@@ -50,9 +50,9 @@ static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentP
 
             if (checkWin(board, i, j, board[i][j])) {
                 if (board[i][j] == aiPlayer) {
-                    return 10000000;
+                    return 10000000-ply;
                 } else {
-                    return -10000000;
+                    return -10000000+ply;
                 }
             }
         }
@@ -64,9 +64,9 @@ static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentP
     if (depth <=0) {
         if (nextMoveWin(board, currentPlayer)) {
             if (currentPlayer == aiPlayer) {
-                return 10000000;
+                return 10000000 - (ply + 1);
             } else {
-                return -10000000;
+                return -10000000 + (ply + 1);
             }
         } else {
             return evaluateBoard(board, aiPlayer);
@@ -89,7 +89,7 @@ static int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player currentP
             if (board[i][j] == EMPTY) {
                 board[i][j] = currentPlayer;
                 Player nextPlayer = (currentPlayer == BLACK)?WHITE:BLACK;
-                int score = minimax(board, depth-1, nextPlayer, aiPlayer, alpha, beta);
+                int score = minimax(board, depth-1, nextPlayer, aiPlayer, alpha, beta, ply+1);
                 board[i][j] = EMPTY;
 
                 if (currentPlayer == aiPlayer) {
@@ -151,7 +151,7 @@ Move bestMove(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player aiPlayer) {
             }
             board[i][j] = aiPlayer;
             Player opponent = (aiPlayer == BLACK) ? WHITE : BLACK;
-            int score = minimax(board, depth - 1, opponent, aiPlayer, bestScore, 1000000000);
+            int score = minimax(board, depth - 1, opponent, aiPlayer, bestScore, 1000000000, 1);
             board[i][j] = EMPTY;
 
             if (bestMove.row == -1 || score > bestScore) {

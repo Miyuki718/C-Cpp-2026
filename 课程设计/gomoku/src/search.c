@@ -131,6 +131,25 @@ Move bestMove(int board[BOARD_SIZE][BOARD_SIZE], int depth, Player aiPlayer) {
             }
 
             board[i][j] = aiPlayer;
+            int win = checkWin(board, i, j, aiPlayer);
+            board[i][j] = EMPTY;
+            if (win) {
+                bestMove.row=i;
+                bestMove.col=j;
+                return bestMove;
+            }
+
+        }
+    }
+    for (int i=0; i<BOARD_SIZE; i++) {
+        for (int j=0; j<BOARD_SIZE; j++) {
+            if (board[i][j] != EMPTY) {
+                continue;
+            }
+            if(!candidates(board, i, j)) {
+                continue;
+            }
+            board[i][j] = aiPlayer;
             Player opponent = (aiPlayer == BLACK) ? WHITE : BLACK;
             int score = minimax(board, depth - 1, opponent, aiPlayer, bestScore, 1000000000);
             board[i][j] = EMPTY;
